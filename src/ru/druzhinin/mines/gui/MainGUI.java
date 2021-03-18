@@ -15,6 +15,7 @@ public class MainGUI {
     private Game game;
     private JPanel buttonFieldPanel;
     private JLabel timerFieldLabel;
+    private MyTimer timer;
     private JFormattedTextField a32FormattedTextField;
     private JFormattedTextField a32FormattedTextField1;
     private JFormattedTextField a64FormattedTextField;
@@ -27,6 +28,7 @@ public class MainGUI {
                 start();
             }
         });
+        timer = new MyTimer();
     }
 
     public JPanel getRootPanel() {
@@ -34,11 +36,14 @@ public class MainGUI {
     }
 
     private void start() {
+        startButton.setText("Restart");
         this.game = new Game(Integer.valueOf(a32FormattedTextField.getText()), Integer.valueOf(a32FormattedTextField1.getText()), Integer.valueOf(a64FormattedTextField.getText()));
         this.game.startGame();
         gameFieldPanel.removeAll();
         gameFieldPanel.revalidate();
         gameFieldPanel.setLayout(new GridLayout(game.getGameFiled().getRows(), game.getGameFiled().getColumns(), 3, 3));
+        timer.stopTimer();
+        timer.startTimer(timerFieldLabel, game);
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 JLabel iconButton = new JLabel(icons.getClosed());
